@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Niyonzi Rauf">
     <link rel="icon" type="image/png" href="./img/vote-hand.png" sizes="32x32">
-    <title>Politico - Welcome</title>
+    <title>SignIn - Log into Account</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -27,11 +27,6 @@
                     <a href="#" class="nav-close-menu js-close-menu"></a>
                 </li>
                 <li class="list-item">
-                    <a href="./signin.html" class="link nav-link">
-                        SignIn
-                    </a>
-                </li>
-                <li class="list-item">
                     <a href="./signup.html" class="link nav-link">
                         SignUp
                     </a>
@@ -40,23 +35,19 @@
         </nav>
     </header>
     <main class="container">
-        <section class="hero container">
-            <h1>Easy Vote for everyone</h1>
-            <p> Politico enables citizens to give their mandate to politicians running for different government offices
-                while building trust in the process through transparency.</p>
-            <a href="#">Vote</a>
-        </section>
-        <div class="side-image">
-            <figure>
-                <img src="./img/voters.png" alt="voting image">
-            </figure>
+        <div class="main main-home">
+                <div class="form-group">
+                        <h2 class="log-title">
+                               SignIn
+                        </h2>
+                    <form class="form-group-form js-form-login" action="./entries.html">
+                        <input class="form-input" type="email" placeholder="email" required />
+                        <input class="form-input" type="password" placeholder="password" required />
+                        <button type="submit" class="form-btn--submit js-login-button">Create Account</button>
+                    </form>
+                </div>
         </div>
     </main>
-    <footer class="footer">
-        <h4>Made with <span>&#10084;</span> by
-            <a class="link" href="https://github.com/nraufu">Raufu</a></h4>
-    </footer>
-    <script src="./js/script.js"></script>
+<script src="./js/script.js"></script>
 </body>
-
 </html>
