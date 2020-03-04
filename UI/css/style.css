@@ -251,6 +251,10 @@ figure img {
     color: #FFF;
 }
 
+.link:hover {
+    color: #FFDB37;
+}
+
 @media only screen and (max-width: 768px) {
     header {
         text-align: center;
