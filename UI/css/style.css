@@ -29,6 +29,10 @@ header {
     border-radius: 50px;
 }
 
+.logo a {
+    text-decoration: none;
+}
+
 .nav {
     float: right;
     margin: 0;
@@ -123,6 +127,110 @@ figure img {
     width: 300px;
 }
 
+.main {
+    text-align: center;
+    display: flex;
+}
+
+.main-home {
+    padding-bottom: 70px;
+}
+
+.form-group {
+    width: 40%;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 475px;
+    background: #ebebeb;
+    color: #5c5c5c;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+
+.form-group-form {
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    text-align: center;
+}
+
+
+.form-input,
+.form-textarea {
+    display: block;
+    font-size: 1.20em;
+    margin: auto auto;
+    margin-bottom: 2em;
+    padding: 0.5em 0;
+    border: none;
+    border-bottom: 2px solid #d1d8ff;
+    border-radius: 2px;
+    background-color: #ebebeb;
+    color: #5c5c5c;
+    width: 75%;
+    resize: none;
+}
+
+.form-input:focus {
+    outline: none;
+}
+
+.form-btn--submit {
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 1.15em;
+    background: #3c9d9b;
+    border: none;
+    padding: 0.5em 2em;
+    color: white;
+    margin-right: 0.5em;
+    box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.2);
+}
+
+.form-btn--submit:hover {
+    background: #FFDB37;
+    color: #5c5c5c;
+    cursor: pointer;
+}
+
+.form-btn--submit:active {
+    background: #1fb5bf;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.form-btn--submit:focus {
+    outline: none;
+}
+
+.alternate {
+    font-size: 1.15em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form-btn--alternate {
+    color: #3c9d9b;
+    font-size: 1.15em;
+    line-height: 0.5em;
+    position: relative;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+.form-btn--alternate:hover {
+    color: #5c5c5c;
+    cursor: pointer;
+}
+
 .figure img {
     width: 120%;
 }
@@ -155,10 +263,10 @@ figure img {
     .nav-list {
         display: none;
         position: fixed;
-        padding: 50px 20px 20px;
-        background: #3e7c64;
+        padding: 40px 20px 20px;
+        background: #1d4235;
         right: 0px;
-        top: 0px;
+        top: -15px;
         width: 40%;
         max-width: 300px;
         height: 90vh;
