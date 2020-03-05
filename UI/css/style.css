@@ -255,6 +255,79 @@ figure img {
     color: #FFDB37;
 }
 
+#parties {
+    border-collapse: separate;
+    width: 100%;
+  }
+  
+  #parties td, #parties th {
+    padding: 8px;
+    
+  }
+  
+  #parties tr:hover {color: #000; font-weight: 400;}
+  
+  #parties th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #FFDB37;
+    color: #5c5c5c;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .button--link {
+    background: transparent;
+  }
+  
+  .button--success {
+    color: white;
+    margin-top: 10px;
+    background-color: #00b8a9;
+  }
+  
+  .button--success:hover {
+    background: #FFDB37;
+    color: #000;
+    cursor: pointer;
+  }
+  
+
+  .story-toolbar {
+    position: relative;
+    height: 60px;
+    padding: 0 50px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .story-toolbar .toolbar-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .story-toolbar .toolbar-edit-btn {
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 0px;
+  }
+  
+  .story-toolbar .toolbar-delete-btn {
+    background-color: transparent;
+  }
+
 @media only screen and (max-width: 768px) {
     header {
         text-align: center;
