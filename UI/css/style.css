@@ -363,6 +363,7 @@ figure img {
 }
 
 .modal-body {
+    position: relative;
     width: 30%;
     text-align: center;
     margin: 200px auto;
@@ -374,9 +375,25 @@ figure img {
     box-shadow: 2px -1px 3px 2px rgba(255, 255, 255, 0.5);
 }
 
+.modal img {
+    position: absolute;
+    border-radius: 5px;
+    top: 5px;
+    right: 5px;
+    background-color: #000;
+    width: 30px;
+    height: 30px;
+}
+
 .modal-cancel-btn {
     background-color: firebrick;
     color: #fff;
+}
+
+.modal-cancel-btn:hover {
+    background-color: white;
+    border: 1px solid firebrick;
+    color: firebrick;
 }
 
 .modal-input {
@@ -385,6 +402,10 @@ figure img {
     margin-bottom: 2.5em;
     border: none;
     border-bottom: 2px solid #d1d8ff;
+    outline: none;
+}
+
+.js-content {
     outline: none;
 }
 
