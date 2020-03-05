@@ -11,6 +11,14 @@
 </head>
 
 <body>
+    <div class="modal js-modal">
+        <div class="modal-body">
+            <input class="modal-input" type="text" placeholder="Party Name" required/><br>
+            <input class="modal-input" type="text" placeholder="HQ Address" required/><br>
+          <a type="button" href="./panel.html" class="button button--success js-confirm-modal">Add</a>
+          <a type="button" class="button modal-cancel-btn js-cancel-modal">Cancel</a>
+        </div>
+      </div>
     <header class="container">
         <div class="logo">
             <a href="#">
@@ -44,6 +52,11 @@
             </ul>
         </nav>
     </header>
+    <div class="add-party">
+        <div class="toolbar-buttons">
+            <a type="button" class="button button--success toolbar-edit-btn js-create-story">➕ Create Party</a>
+        </div>
+    </div>
     <main class="container">
         <table id="parties">
             <tr>
