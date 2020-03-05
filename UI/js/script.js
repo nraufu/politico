@@ -50,3 +50,29 @@ if(viewBtn) {
 		viewBtn[i].addEventListener('click', showPartyModal);
 	}
 }
+
+//edit party function
+let editMode = false;
+const storyEditBtn = document.querySelector(".js-edit-story");
+
+const editStory = (e) => {
+	const el = document.querySelector(".js-content");
+	if (!editMode) {
+		const range = document.createRange();
+		const sel = window.getSelection();
+		range.setStart(el.childNodes[0], 0);
+		range.collapse(true);
+		sel.removeAllRanges();
+		sel.addRange(range);
+		el.focus();
+		e.target.innerHTML = "Save";
+		editMode = true;
+	}
+	else {
+		e.target.innerHTML = "Edit";
+		editMode = false;
+		window.focus();
+	}
+};
+
+if (storyEditBtn) storyEditBtn.addEventListener('click', editStory);
