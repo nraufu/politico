@@ -13,20 +13,24 @@
 <body>
     <div class="modal js-modal">
         <div class="modal-body">
-            <input class="modal-input" type="text" placeholder="Party Name" required/><br>
-            <input class="modal-input" type="text" placeholder="HQ Address" required/><br>
-          <a type="button" href="./panel.html" class="button button--success js-confirm-modal">Add</a>
+            <input class="modal-input" type="text" placeholder="Office Name" required/><br>
+            <select class="modal-input">
+                <option value="choose">--choose Type--</option>
+                <option value="choose">Federal</option>
+                <option value="choose">Legislative</option>
+                <option value="choose">Local Government</option>
+            </select><br>
+          <a type="button" href="./offices.html" class="button button--success js-confirm-modal">Add</a>
           <a type="button" class="button modal-cancel-btn js-cancel-modal">Cancel</a>
         </div>
       </div>
     <div class="modal modal-info js-party-modal">
         <div class="modal-body">
-            <a href="./panel.html"><img src="../img/close-icon.svg" alt="close"></a>
-            <p>Party Name: <span contenteditable="true" class="js-content">RPF</span></p>
-            <p>HeadQuarters: <span contenteditable="true" class="js-content">Kigali, Rwanda</span></p>
-            <p>CreatedOn: <span contenteditable="true" class="js-content">01 December 1987</span></p>
+            <a href="./offices.html"><img src="../img/close-icon.svg" alt="close"></a>
+            <p>Office Name: <span contenteditable="true" class="js-content">Investigation Bureau</span></p>
+            <p>Office Type: <span contenteditable="true" class="js-content">Federal</span></p>
             <a type="button" class="button button--success toolbar-edit-btn js-edit-story">Edit</a>
-          <a type="button" href="./panel.html" class="button button--delete js-delete">Delete</a>
+          <a type="button" href="./offices.html" class="button button--delete js-delete">Delete</a>
         </div>
       </div>
     <header class="container">
@@ -44,12 +48,12 @@
                 <li class="list-item">
                     <a href="#" class="nav-close-menu js-close-menu"></a>
                 </li>
-                <li class="list-item active">
+                <li class="list-item">
                     <a href="./panel.html" class="link nav-link">
                         Parties
                     </a>
                 </li>
-                <li class="list-item">
+                <li class="list-item active">
                     <a href="./offices.html" class="link nav-link">
                         Offices
                     </a>
@@ -64,19 +68,19 @@
     </header>
     <div class="add-party">
         <div class="toolbar-buttons">
-            <a type="button" class="button button--success toolbar-edit-btn js-create-party">➕ Create Party</a>
+            <a type="button" class="button button--success toolbar-edit-btn js-create-party">➕ Create Office</a>
         </div>
     </div>
     <main class="container">
         <table id="parties">
             <tr>
-                <th>Party Name</th>
-                <th>HQ Address</th>
+                <th>Office Name</th>
+                <th>Office Type</th>
 
             </tr>
             <tr>
-                <td>FPR</td>
-                <td>kigali, Rwanda</td>
+                <td>Investigation Bureau</td>
+                <td>Federal</td>
                 <td>
                     <div class="toolbar-buttons">
                         <a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
@@ -84,8 +88,8 @@
                 </td>
             </tr>
             <tr>
-                <td>PSD</td>
-                <td>Kigali, Rwanda</td>
+                <td>Ministry of Agriculture</td>
+                <td>Local government</td>
                 <td>
                     <div class="toolbar-buttons">
                         <a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
@@ -93,26 +97,8 @@
                 </td>
             </tr>
             <tr>
-                <td>PDI</td>
-                <td>Kigali, Rwanda</td>
-                <td>
-                    <div class="toolbar-buttons">
-                        <a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>PDC</td>
-                <td>Kigali, Rwanda</td>
-                <td>
-                    <div class="toolbar-buttons">
-                        <a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>DGPR</td>
-                <td>Kigali, Rwanda</td>
+                <td>prosecutor chamber</td>
+                <td>legislative</td>
                 <td>
                     <div class="toolbar-buttons">
                         <a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
