@@ -71,6 +71,9 @@ header {
     background-repeat: no-repeat;
 }
 
+.active a {
+    color: #FFDB37;
+}
 
 main {
     display: flex;
