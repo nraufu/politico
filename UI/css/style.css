@@ -106,7 +106,7 @@ main {
 }
 
 .hero a {
-    background: #AE79C4;
+    background: #00b8a9;
     padding: 1em 3em;
     border-radius: 50px;
     color: white;
@@ -204,11 +204,6 @@ figure img {
     cursor: pointer;
 }
 
-.form-btn--submit:active {
-    background: #1fb5bf;
-    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.1);
-}
-
 .form-btn--submit:focus {
     outline: none;
 }
@@ -277,6 +272,16 @@ figure img {
     color: #5c5c5c;
 }
 
+#parties tr td img {
+    width: 150px;
+    height: 80px;
+    border-radius: 5px;
+}
+
+#parties tr td:hover {
+    color: #000;
+    cursor: pointer;
+}
 .button {
     display: inline-block;
     padding: 10px 10px;
@@ -402,7 +407,7 @@ figure img {
 .modal-input {
     display: inline-block;
     font-size: 1em;
-    margin-bottom: 2.5em;
+    margin-bottom: 2em;
     border: none;
     border-bottom: 2px solid #d1d8ff;
     outline: none;
