@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Niyonzi Rauf">
+    <link rel="icon" type="image/png" href="./img/vote-hand.png" sizes="32x32">
+    <title>politician - place candidature</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <header class="container">
+        <div class="logo">
+            <a href="./index.html">
+                <h1 id="p-logo">
+                    <img src="./img/vote-hand.png" alt="logo" width="25px" height="25px">
+                    Politico
+                </h1>
+            </a>
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-open-menu js-open-menu"></a>
+            <ul class="list nav-list js-nav-list">
+                <li class="list-item">
+                    <a href="#" class="nav-close-menu js-close-menu"></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <div class="main main-home">
+            <div class="form-group">
+                <h2 class="log-title">
+                    Place Candidature 
+                </h2>
+                <form class="form-group-form js-form-login" action="./index.html">
+                    <input class="form-input" type="text" placeholder="Candidate Full Name" required />
+                    <input class="form-input" type="text" placeholder="Politician ID" required />
+                    <select class="form-input" value="none" required >
+                        <option value="">--Candidate Party--</option>
+                        <option value="Investigation Bureau">FPR</option>
+                        <option value="Ministry">PSD</option>
+                        <option value="Prosecutor">PDI</option>
+                    </select>
+                    <select class="form-input" value="none" required >
+                        <option value="">--Choose Office--</option>
+                        <option value="Investigation Bureau"> Investigation Bureau</option>
+                        <option value="Ministry">Ministry Chamber</option>
+                        <option value="Prosecutor">Prosecutor Chamber</option>
+                    </select>
+                    <textarea class="form-input textarea" name="interest" id="textarea" cols="30" rows="10" placeholder="Describe Your Interest to run for The Office" required></textarea>
+                    <button type="submit" class="form-btn--submit js-login-button">Place</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
