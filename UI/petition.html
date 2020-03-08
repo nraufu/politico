@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Niyonzi Rauf">
     <link rel="icon" type="image/png" href="./img/vote-hand.png" sizes="32x32">
-    <title>politician - place candidature</title>
+    <title>Politician - Petition</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -26,11 +26,6 @@
                 <li class="list-item">
                     <a href="#" class="nav-close-menu js-close-menu"></a>
                 </li>
-                <li class="list-item">
-                    <a href="./petition.html" class="link nav-link">
-                        Create Petition
-                    </a>
-                </li>
             </ul>
         </nav>
     </header>
@@ -38,24 +33,18 @@
         <div class="main main-home">
             <div class="form-group">
                 <h2 class="log-title">
-                    Place Candidature 
+                    Petition
                 </h2>
                 <form class="form-group-form js-form-login" action="./index.html">
-                    <input class="form-input" type="text" placeholder="Candidate Full Name" required />
                     <input class="form-input" type="text" placeholder="Politician ID" required />
-                    <select class="form-input" value="none" required >
-                        <option value="">--Candidate Party--</option>
-                        <option value="Investigation Bureau">FPR</option>
-                        <option value="Ministry">PSD</option>
-                        <option value="Prosecutor">PDI</option>
-                    </select>
+                    <input class="form-input" type="text" placeholder="Created By" required />
                     <select class="form-input" value="none" required >
                         <option value="">--Choose Office--</option>
                         <option value="Investigation Bureau"> Investigation Bureau</option>
                         <option value="Ministry">Ministry Chamber</option>
                         <option value="Prosecutor">Prosecutor Chamber</option>
                     </select>
-                    <textarea class="form-input textarea" name="interest" id="textarea" cols="20" rows="5" placeholder="Describe Your Interest to run for The Office" required></textarea>
+                    <textarea class="form-input textarea" name="interest" id="textarea" cols="30" rows="10" placeholder="Describe Reason for petition" required></textarea>
                     <button type="submit" class="form-btn--submit js-login-button">Place</button>
                 </form>
             </div>
