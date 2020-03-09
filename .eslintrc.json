@@ -10,15 +10,11 @@
     },
     "rules": {
         "no-console": "off",
-        "linebreak-style": "error"
+        "linebreak-style": "error",
+        "eol-last": "warn"
     },
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
-    },
-    "eslintConfig": {
-        "rules": {
-            "no-var": 1
-        }
     }
 }
