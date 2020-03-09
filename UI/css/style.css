@@ -535,7 +535,7 @@ figure img {
 }
 
 .voted-card {
-    max-width: 35%;
+    min-width: 35%;
     border-radius: 10px;
     margin: 20px;
     background-color: #fff;
@@ -574,6 +574,10 @@ figure img {
     border-radius: 25px;
     color: #eee;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.success {
+	color: #0b3014 !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -645,26 +649,38 @@ figure img {
 
     .modal-body {
         width: 80%;
-    }
+	}
+	
+	.cards-wrapper {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-width: 50%;
+	}
+
+	.profile-card {
+		text-align: center;
+	}
 }
 
 @media only screen and (min-width: 1366px) and (orientation: portrait) {
 
     html,
     body {
-        min-height: 80vh;
+        max-height: 70vh;
     }
 
     .modal-body {
         width: 80%;
-    }
+	}
 }
 
 @media only screen and (min-width: 1366px) and (orientation: landscape) {
 
     html,
     body {
-        min-height: 80vh;
+        max-height: 70vh;
     }
 
 }
