@@ -27,9 +27,11 @@ window.addEventListener('resize', toggleSideBar);
 //modals functions
 const modal_create = document.querySelector(".js-modal");
 const modal_info = document.querySelector(".js-party-modal");
+const onSuccess = document.querySelector('.modal-politician');
 const createPartyBtn = document.querySelector(".js-create-party");
 const modalCancelBtn = document.querySelector(".js-cancel-modal");
 const viewBtn = document.querySelectorAll('.js-view-party');
+const placeBtn = document.querySelector('.js-place-button');
 
 const showCreateModal = (e) => {
 	modal_create.style.display = 'block';
@@ -43,6 +45,12 @@ const showPartyModal = (e) => {
 	modal_info.style.display = 'block';
 }
 
+const showSuccess = (e) => {
+	onSuccess.style.display = 'block';
+	e.preventDefault();
+}
+
+if(placeBtn) placeBtn.addEventListener('click', showSuccess);
 if(createPartyBtn) createPartyBtn.addEventListener('click', showCreateModal);
 if(modalCancelBtn) modalCancelBtn.addEventListener('click', hideModal);
 if(viewBtn) {
