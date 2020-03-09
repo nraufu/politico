@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Niyonzi Rauf">
-    <link rel="icon" type="image/png" href="./img/vote-hand.png" sizes="32x32">
-    <title>SignIn - Log into Account</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="../img/vote-hand.png" sizes="32x32">
+    <title>SignUp - Create an Account</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
     <header class="container">
         <div class="logo">
-            <a href="./index.html">
-            <h1 id="p-logo">
-                    <img src="./img/vote-hand.png" alt="logo" width="25px" height="25px">
+            <a href="../index.html">
+                <h1 id="p-logo">
+                    <img src="../img/vote-hand.png" alt="logo" width="25px" height="25px">
                     Politico
                 </h1>
             </a>
@@ -27,8 +27,8 @@
                     <a href="#" class="nav-close-menu js-close-menu"></a>
                 </li>
                 <li class="list-item">
-                    <a href="./signup.html" class="link nav-link">
-                        SignUp
+                    <a href="./signin.html" class="link nav-link">
+                        SignIn
                     </a>
                 </li>
             </ul>
@@ -36,19 +36,24 @@
     </header>
     <main class="container">
         <div class="main main-home">
+            <div class="container">
                 <div class="form-group">
-                        <h2 class="log-title">
-                               SignIn
-                        </h2>
+                    <h2 class="log-title">
+                        SignUp
+                    </h2>
                     <form class="form-group-form js-form-login" action="./parties.html">
-                        <input class="form-input" type="email" placeholder="email" required />
-                        <input class="form-input" type="password" placeholder="password" required />
+                        <input class="form-input" type="text" placeholder="Full Name" required />
+                        <input class="form-input" type="text" placeholder="National ID" required />
+                        <input class="form-input" type="email" placeholder="Email" required />
+                        <input class="form-input" type="password" placeholder="Password" required />
+                        <input class="form-input" type="password" placeholder="Confirm password" required />
                         <button type="submit" class="form-btn--submit js-login-button">Create Account</button>
-                        <p class="alternate">Forgot Password?<a class="form-btn--alternate" href="./recover.html"> Recover Password</a></p>
                     </form>
                 </div>
+            </div>
         </div>
     </main>
-<script src="./js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
+
 </html>
