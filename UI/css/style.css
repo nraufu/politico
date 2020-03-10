@@ -144,7 +144,7 @@ figure img {
     border-radius: 8px;
     min-width: 310px;
     max-width: 480px;
-    margin: 80px 0;
+    margin: auto 0;
     background: #ebebeb;
     color: #5c5c5c;
     position: absolute;
@@ -579,6 +579,11 @@ figure img {
 .success {
 	color: #0b3014 !important;
 }
+
+li a img {
+	border-radius: 50px;
+}
+
 
 @media only screen and (max-width: 768px) {
 
