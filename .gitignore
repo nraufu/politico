@@ -6,3 +6,7 @@
 
 # production
 /build
+
+#coverage
+.nyc_output/
+coverage/
