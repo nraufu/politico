@@ -1,11 +1,14 @@
 import express from 'express';
 import morgan from 'morgan';
+import userRouter from './routes/users';
+import createTables from './models/createTables';
+
+createTables();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+const PORT = process.env.PORT || 3000;
 
 if( process.env.NODE_ENV == 'development') app.use(morgan('dev'));
 
@@ -15,4 +18,8 @@ app.get('/', (req, res) => {
     });
 });
 
+app.use('/auth/', userRouter);
+
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}....`));
+
+export default app;
