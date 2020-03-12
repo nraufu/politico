@@ -80,6 +80,18 @@ export const validate = {
 		const { error } = schema.validate(req.body);
 		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
 		next();
+	},
+
+	paramValidation(req, res, next) {
+		const schema = Joi.object({
+			id: Joi.number().required().messages({
+				"number.base": 'Political party ID must be integer',
+				"number.unsafe": 'Political party ID too large',
+				"any.required": 'A valid Id is required'
+			})
+		})
+		const { error } = schema.validate(req.params);
+		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
+		next();
 	}
-	
 };
