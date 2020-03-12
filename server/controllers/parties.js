@@ -32,4 +32,18 @@ export class Party {
 			return responseHandler(res, 500, { "Error": error.message });
 		 }
 	 }
+
+	 static getParty = async (req, res) => {
+		 try {
+			const party = await query(queries.getParty, [req.params.id]);
+			if(!party.rowCount) return responseHandler(res, 404, {Error: 'No political party found'});
+			return responseHandler(res, 200, {
+				"status": 200,
+				"data": party.rows
+			})
+		 } catch (error) {
+			return responseHandler(res, 500, { "Error": error.message });
+		 }
+	 } 
+		
 }
