@@ -18,7 +18,14 @@ app.get('/', (req, res) => {
     });
 });
 
+//api routes
 app.use('/auth/', userRouter);
+
+//invalid route handler
+app.use((req, res, next) => {
+	res.status(400).json({Error: 'Invalid Request'});
+	next();
+});
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}....`));
 
