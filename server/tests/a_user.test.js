@@ -6,6 +6,8 @@ import data from './data';
 const { expect } = chai;
 chai.use(chaiHttp);
 
+export let cachedToken;
+
 describe('/server running', () => {
 	it('should return 200 ok status', (done) => {
 		chai
@@ -87,6 +89,7 @@ describe('/POST login into an account', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.be.an('object');
 				expect(res.body.data[0]).to.have.property('token');
+				cachedToken = res.body.data[0].token;
 				done();
 			});
 	});

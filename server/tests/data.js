@@ -12,7 +12,9 @@ const data = {
 		"logoUrl": 'http://logo.com/partyLogoUrl',
 		"name": 'party name',
 		"hqAddress": 'city, country'
-	}
+	},
+
+	invalidToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYXRpb25hbF9pZCI6IjE1MTQxMDk4NzY1NDMyMTAiLCJpc2FkbWluIjoi'
 }
 
 export default data;

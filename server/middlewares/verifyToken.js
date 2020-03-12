@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import responseHandler from '../helpers/response';
+import { responseHandler } from '../helpers/response';
 
 dotenv.config();
 
