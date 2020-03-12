@@ -19,4 +19,17 @@ export class Party {
 			return responseHandler(res, 500, { "Error": error.message }); 
 		 } 
 	 }
+
+	 static getParties = async (req, res) => {
+		 try {
+			const parties = await query(queries.getParties);
+			if(!parties.rowCount) return responseHandler(res, 404, {Error: 'No political parties registered'});
+			return responseHandler(res, 200, {
+				"status": 200,
+				"data": parties.rows
+			});
+		 } catch (error) {
+			return responseHandler(res, 500, { "Error": error.message });
+		 }
+	 }
 }

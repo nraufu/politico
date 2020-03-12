@@ -6,7 +6,19 @@ import data from './data';
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('/POST create a political party', () => {
+describe('political parties test', () => {
+	it('should return 404 not found when no political party is found', (done) => {
+		chai
+			.request(app)
+			.get('/parties/')
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+	
+
 	it('should return 200 ok status when party is created successfully', (done) => {
 		chai
 			.request(app)
@@ -16,6 +28,17 @@ describe('/POST create a political party', () => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data');
 				done();
+			});
+	});
+
+	it('should return 200 ok status when a list of political parties is found', (done) => {
+		chai
+			.request(app)
+			.get('/parties/')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+					done();
 			});
 	});
 
