@@ -19,6 +19,19 @@ describe('/server running', () => {
 	});
 });
 
+describe('/invalid routes', () => {
+	it('should return 400 bad request status when invalid routes invoked', (done) => {
+		chai
+			.request(app)
+			.post('/url')
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			})
+	});
+});
+
 describe('/POST signup user create an account', () => {
 	it('should return 201 created status on new User signUp', (done) => {
 		chai
@@ -52,6 +65,69 @@ describe('/POST signup user create an account', () => {
 			.send({
 				fullName: 'another user name',
 				email: 'another Email'
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+});
+
+describe('/POST login into an account', () => {
+	it('should return 200 ok status on user login', (done) => {
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send({
+				national_id: data.user.national_id,
+				password: data.user.password
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.be.an('object');
+				expect(res.body.data[0]).to.have.property('token');
+				done();
+			});
+	});
+
+	it('should return 404 not found status when user doesn\'t exist', (done) => {
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send({
+				national_id: '1000000000000001',
+				password: 'userPassword'
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when password is incorrect', (done) => {
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send({
+				national_id: data.user.national_id,
+				password: 'anotherPassword'
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when input field are empty', (done) => {
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send({
+				national_id: '',
+				password: 'anotherPassword'
 			})
 			.end((err, res) => {
 				expect(res).to.have.status(400);

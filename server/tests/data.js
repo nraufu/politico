@@ -1,10 +1,11 @@
 const data = {
 	user: {
-		fullName: 'full user Name',
-		email: 'user@email.com',
-		phoneNumber: '07874521456',
-		passportUrl: 'https://passport.url',
-		password: 'userPassword'
+		"fullName": 'username',
+		"email": 'user@email.com',
+		"phoneNumber": '0787452145',
+		"national_id": '1514109876543210',
+		"passportUrl": 'https://passport.url/passport',
+		"password": 'user2Password'
 	}
 }
 
