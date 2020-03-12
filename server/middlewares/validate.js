@@ -60,5 +60,26 @@ export const validate = {
 		const { error } = schema.validate(req.body);
 		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
 		next();
+	},
+
+	party(req, res, next) {
+		const schema = Joi.object({
+			logoUrl: Joi.string().required().messages({
+				"string.empty": `logoUrl can't be empty`,
+				"any.required": `logoUrl is required`
+			}),
+			name: Joi.string().required().messages({
+				"string.empty": `name can't be empty`,
+				"any.required": `name is required`
+			}),
+			hqAddress: Joi.string().required().messages({
+				"string.empty": `hqAddress can't be empty`,
+				"any.required": `hqAddress is required`
+			}),
+		})
+		const { error } = schema.validate(req.body);
+		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
+		next();
 	}
+	
 };
