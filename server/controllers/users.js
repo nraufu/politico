@@ -14,7 +14,7 @@ export class User {
 			const hashPassword = bcrypt.hashSync(password, 5);
 			const newUser = await query(queries.insertUser, [fullName, email, phoneNumber, national_id, passportUrl, hashPassword]);
 			const newUserInfo = newUser.rows[0];
-			const token = assignToken({ national_id : newUserInfo.national_id});
+			const token = assignToken({ national_id : newUserInfo.national_id, isAdmin:newUserInfo.isadmin });
 			return responseHandler(res, 201, {
 				"status" : 201,
 				"data": [{
@@ -42,7 +42,7 @@ export class User {
 			const userInfo = user.rows[0];
 			const isPasswordValid = bcrypt.compareSync(password, userInfo.password);
 			if(!isPasswordValid) return responseHandler(res, 400, { Error: 'Incorrect Password'});
-			const token = assignToken({ national_id : userInfo.national_id});
+			const token = assignToken({ national_id : userInfo.national_id, isAdmin: userInfo.isadmin});
 			return responseHandler(res, 200, {
 				"status" : 200,
 				"data": [{

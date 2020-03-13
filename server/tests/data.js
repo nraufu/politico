@@ -1,4 +1,8 @@
 const data = {
+	pUser: {
+		"national_id": '1180074714845726',
+		"password": "Admin123"
+	},
 	user: {
 		"fullName": 'username',
 		"email": 'user@email.com',
