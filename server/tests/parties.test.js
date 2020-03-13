@@ -7,12 +7,28 @@ import {cachedToken} from './a_user.test';
 const { expect } = chai;
 chai.use(chaiHttp);
 
+let token;
+let cachedPartyId;
+
 describe('political parties test', () => {
+	it('should return an admin token', (done) => {
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send(data.pUser)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				token  = res.body.data[0].token;
+				done();
+			})
+
+	});
+
 	it('should return 404 not found when no political party is found', (done) => {
 		chai
 			.request(app)
 			.get('/parties/')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
 				expect(res.body).have.property('Error');
@@ -25,11 +41,12 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.post('/parties/')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.send(data.party)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data');
+				cachedPartyId = res.body.data.id;
 				done();
 			});
 	});
@@ -38,7 +55,7 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.get('/parties/')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data');
@@ -50,7 +67,7 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.get('/parties/1')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data');
@@ -62,7 +79,7 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.get('/parties/0')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(404);
 				expect(res.body).to.have.property('Error');
@@ -74,7 +91,7 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.get('/parties/url')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.property('Error');
@@ -86,7 +103,7 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.post('/parties/')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.send(data.party)
 			.end((err, res) => {
 				expect(res).to.have.status(409);
@@ -99,7 +116,7 @@ describe('political parties test', () => {
 		chai
 			.request(app)
 			.post('/parties/')
-			.set('x-auth-token', cachedToken)
+			.set('x-auth-token', token)
 			.send({})
 			.end((err, res) => {
 				expect(res).to.have.status(400);
@@ -127,6 +144,54 @@ describe('political parties test', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 404 not found status when deleting a non-existing party', (done) => {
+		chai
+			.request(app)
+			.delete('/parties/0')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when an invalid ID is passed', (done) => {
+		chai
+			.request(app)
+			.delete('/parties/name')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 403 forbidden status when access to delete is not permitted', (done) => {
+		chai
+			.request(app)
+			.delete('/parties/0')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when a party is deleted successfully', (done) => {
+		chai
+			.request(app)
+			.delete(`/parties/${cachedPartyId}`)
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
 				done();
 			});
 	});

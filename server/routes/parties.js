@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/', verifyToken, validate.party, Party.createParty);
 router.get('/', verifyToken, Party.getParties);
 router.get('/:id', verifyToken, validate.paramValidation, Party.getParty);
+router.delete('/:id', verifyToken, validate.paramValidation, Party.deleteParty);
 
 export default router;

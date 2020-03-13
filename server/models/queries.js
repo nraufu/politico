@@ -4,6 +4,7 @@ const queries = {
 	partyExist: 'SELECT * FROM parties WHERE name=$1 or logoUrl=$2',
 	insertParty: 'INSERT INTO parties (logoUrl, name, hqAddress) VALUES ($1, $2, $3) RETURNING *',
 	getParties: 'SELECT * FROM parties',
-	getParty: 'SELECT * FROM parties where id=$1'
+	getParty: 'SELECT * FROM parties where id=$1',
+	deleteParty: 'DELETE FROM parties where id=$1'
 }
 export default queries;
