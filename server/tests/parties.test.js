@@ -1,7 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import sinon from 'sinon';
 import app from '../app';
 import data from './data';
+import { pool } from '../models/connect';
 import {cachedToken} from './users.test';
 
 const { expect } = chai;
@@ -204,6 +206,65 @@ describe('Political parties test', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(200);
 				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+});
+
+describe('Database failure', () => {
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.post('/parties/')
+			.set('x-auth-token', token)
+			.send(data.party)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.get('/parties/')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.get('/parties/1')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.delete('/parties/1')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
 				done();
 			});
 	});

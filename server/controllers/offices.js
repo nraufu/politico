@@ -16,4 +16,17 @@ export class Office {
 			return responseHandler(res, 500, { status: 500, Error: error.message });
 		}
 	}
+
+	static getOffices = async (req, res) => {
+		try {
+		   const offices = await query(queries.getOffices);
+		   if(!offices.rowCount) return responseHandler(res, 404, {Error: 'No government offices registered'});
+		   return responseHandler(res, 200, {
+			   "status": 200,
+			   "data": offices.rows
+		   });
+		} catch (error) {
+			return responseHandler(res, 500, { status: 500, Error: error.message });
+		}
+	}
 }

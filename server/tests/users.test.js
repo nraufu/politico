@@ -1,7 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import sinon from 'sinon';
 import app from '../app';
 import data from './data';
+import { pool } from '../models/connect';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -74,6 +76,21 @@ describe('user create an account', () => {
 				done();
 			});
 	});
+
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.post('/auth/signup')
+			.send(data.user)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
 });
 
 describe('user login into an account', () => {
@@ -135,6 +152,23 @@ describe('user login into an account', () => {
 			.end((err, res) => {
 				expect(res).to.have.status(400);
 				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+	
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send({
+				national_id: data.user.national_id,
+				password: data.user.password
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
 				done();
 			});
 	});
