@@ -34,7 +34,7 @@ describe('/invalid routes', () => {
 	});
 });
 
-describe('/POST signup user create an account', () => {
+describe('user create an account', () => {
 	it('should return 201 created status on new User signUp', (done) => {
 		chai
 			.request(app)
@@ -76,7 +76,7 @@ describe('/POST signup user create an account', () => {
 	});
 });
 
-describe('/POST login into an account', () => {
+describe('user login into an account', () => {
 	it('should return 200 ok status on user login', (done) => {
 		chai
 			.request(app)

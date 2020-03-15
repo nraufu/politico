@@ -1,7 +1,7 @@
 import { pool } from './connect';
 
 const tablesQuery =`
-DROP TABLE IF EXISTS users, parties;
+DROP TABLE IF EXISTS users, parties, offices;
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     fullName VARCHAR(50) NOT NULL,
@@ -18,6 +18,12 @@ CREATE TABLE IF NOT EXISTS parties (
     logoUrl VARCHAR(100) NOT NULL,
     name VARCHAR(50) UNIQUE NOT NULL,
 	hqAddress VARCHAR(100) NOT NULL,
+	created_on TIMESTAMP DEFAULT now() NOT NULL
+);
+CREATE TABLE IF NOT EXISTS offices (
+	id SERIAL PRIMARY KEY,
+    type VARCHAR(100) NOT NULL,
+    name VARCHAR(50) UNIQUE NOT NULL,
 	created_on TIMESTAMP DEFAULT now() NOT NULL
 );
 

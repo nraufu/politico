@@ -2,16 +2,16 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 import data from './data';
-import {cachedToken} from './a_user.test';
+import {cachedToken} from './users.test';
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
-let token;
+export let token;
 let cachedPartyId;
 
-describe('political parties test', () => {
-	it('should return an admin token', (done) => {
+describe('Political parties test', () => {
+	it('should return a token', (done) => {
 		chai
 			.request(app)
 			.post('/auth/login')
@@ -36,6 +36,18 @@ describe('political parties test', () => {
 			});
 	});
 	
+	it('should return 403 forbidden status when non-admin user try to create a political party', (done) => {
+		chai
+			.request(app)
+			.post('/parties/')
+			.set('x-auth-token', cachedToken)
+			.send(data.party)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
 
 	it('should return 200 ok status when party is created successfully', (done) => {
 		chai
@@ -175,10 +187,10 @@ describe('political parties test', () => {
 	it('should return 403 forbidden status when access to delete is not permitted', (done) => {
 		chai
 			.request(app)
-			.delete('/parties/0')
-			.set('x-auth-token', token)
+			.delete(`/parties/${cachedPartyId}`)
+			.set('x-auth-token',cachedToken)
 			.end((err, res) => {
-				expect(res).to.have.status(404);
+				expect(res).to.have.status(403);
 				expect(res.body).to.have.property('Error');
 				done();
 			});

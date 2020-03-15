@@ -18,7 +18,12 @@ const data = {
 		"hqAddress": 'city, country'
 	},
 
-	invalidToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYXRpb25hbF9pZCI6IjE1MTQxMDk4NzY1NDMyMTAiLCJpc2FkbWluIjoi'
+	invalidToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYXRpb25hbF9pZCI6IjE1MTQxMDk4NzY1NDMyMTAiLCJpc2FkbWluIjoi',
+
+	office: {
+		"type": "local government",
+		"name": "cabinet of minister"
+	}
 }
 
 export default data;
