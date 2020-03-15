@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import userRouter from './routes/users';
 import partyRouter from './routes/parties';
+import officeRouter from './routes/offices';
 import createTables from './models/createTables';
 
 createTables();
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 //api routes
 app.use('/auth/', userRouter);
 app.use('/parties/', partyRouter);
+app.use('/offices/', officeRouter);
 
 //invalid route handler
 app.use((req, res, next) => {
