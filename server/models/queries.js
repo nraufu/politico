@@ -8,6 +8,7 @@ const queries = {
 	deleteParty: 'DELETE FROM parties where id=$1',
 	officeExist: 'SELECT * FROM offices where type=$1 or name=$2',
 	insertOffice: 'INSERT INTO offices (type, name) VALUES ($1, $2) returning *',
-	getOffices: 'SELECT * FROM offices'
+	getOffices: 'SELECT * FROM offices',
+	getOffice: 'SELECT * FROM offices where id=$1'
 }
 export default queries;
