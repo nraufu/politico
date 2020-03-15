@@ -101,8 +101,8 @@ export const validate = {
 	paramValidation(req, res, next) {
 		const schema = Joi.object({
 			id: Joi.number().required().messages({
-				"number.base": 'Political party ID must be integer',
-				"number.unsafe": 'Political party ID too large',
+				"number.base": 'ID must be integer',
+				"number.unsafe": 'ID is too large',
 				"any.required": 'A valid Id is required'
 			})
 		})
