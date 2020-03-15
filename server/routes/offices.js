@@ -5,6 +5,7 @@ import { Office } from '../controllers/offices';
 
 const router = express.Router();
 
-router.post('/', verifyToken, Office.createOffice);
+router.post('/', validate.office, verifyToken, Office.createOffice);
+router.get('/', verifyToken, Office.getOffices);
 
 export default router;
