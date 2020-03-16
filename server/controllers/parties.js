@@ -45,7 +45,25 @@ export class Party {
 		 } catch (error) {
 			return responseHandler(res, 500, { "Error": error.message });
 		 }
-	 } 
+	 }
+
+	 static editParty = async (req, res) => {
+		 try {
+			const { logoUrl, name, hqAddress } = req.body;
+			if(req.authorizedUser.isAdmin === 'false') return responseHandler(res, 403, { status: 403, Error: 'You are not allowed to perform this action'});
+			const party = await query(queries.getParty, [req.params.id]);
+			if(!party.rowCount) return responseHandler(res, 404, {Error: 'No political party found'});
+			const partyExist = await query(queries.partyExist, [name, logoUrl]);
+			if(partyExist.rowCount) return responseHandler(res, 409, { status: 409, Error: 'logoUrl and name already taken'});
+			const updateParty = await query(queries.editParty, [logoUrl, name, hqAddress, req.params.id]);
+			return responseHandler(res, 200, {
+				status: 200,
+				data: updateParty.rows
+			});
+		 } catch (error) {
+			return responseHandler(res, 500, { status: 500, Error: error.message });
+		 }
+	 }
 
 	 static deleteParty = async (req, res) => {
 		 try {
