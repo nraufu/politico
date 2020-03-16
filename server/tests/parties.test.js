@@ -162,6 +162,58 @@ describe('Political parties test', () => {
 			});
 	});
 
+	it('should return 403 forbidden status when non-admin user try to modify a political party', (done) => {
+		chai
+			.request(app)
+			.patch(`/parties/${cachedPartyId}`)
+			.set('x-auth-token', cachedToken)
+			.send(data.modifyParty)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 404 not found status when user try to modify a political party which doesn\'t exist', (done) => {
+		chai
+			.request(app)
+			.patch(`/parties/0`)
+			.set('x-auth-token', token)
+			.send(data.modifyParty)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when party is modified successfully', (done) => {
+		chai
+			.request(app)
+			.patch(`/parties/${cachedPartyId}`)
+			.set('x-auth-token', token)
+			.send(data.modifyParty)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
+	it('should return 409 conflict status when trying to modify with already exist info name and logoUrl', (done) => {
+		chai
+			.request(app)
+			.patch(`/parties/${cachedPartyId}`)
+			.set('x-auth-token', token)
+			.send(data.modifyParty)
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
 	it('should return 404 not found status when deleting a non-existing party', (done) => {
 		chai
 			.request(app)
@@ -212,7 +264,7 @@ describe('Political parties test', () => {
 });
 
 describe('Database failure', () => {
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when something wrong happens while trying to create a political party', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
@@ -227,7 +279,7 @@ describe('Database failure', () => {
 			});
 	});
 
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when something wrong happens while trying to retrieve all parties', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
@@ -241,7 +293,7 @@ describe('Database failure', () => {
 			});
 	});
 
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when something wrong happens while trying to retrieve a specific party info', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
@@ -255,12 +307,27 @@ describe('Database failure', () => {
 			});
 	});
 
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when something wrong happens while trying to delete a party', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
 			.delete('/parties/1')
 			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when something wrong happens while trying to modify a specific party info', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.patch('/parties/1')
+			.set('x-auth-token', token)
+			.send(data.modifyParty)
 			.end((err, res) => {
 				expect(res).to.have.status(500);
 				expect(res.body).to.have.property('Error');

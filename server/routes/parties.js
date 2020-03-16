@@ -6,6 +6,7 @@ import { Party } from '../controllers/parties';
 const router = express.Router();
 
 router.post('/', verifyToken, validate.party, Party.createParty);
+router.patch('/:id', verifyToken, validate.party, validate.paramValidation, Party.editParty);
 router.get('/', verifyToken, Party.getParties);
 router.get('/:id', verifyToken, validate.paramValidation, Party.getParty);
 router.delete('/:id', verifyToken, validate.paramValidation, Party.deleteParty);
