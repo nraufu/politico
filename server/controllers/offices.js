@@ -7,7 +7,7 @@ export class Office {
 	static createOffice = async (req, res) => {
 		try {
 			const { type, name} = req.body;
-			if(req.authorizedUser.isAdmin === 'false') return responseHandler(res, 403, {Error: 'You are not allowed to perform this action'});
+			if(req.authorizedUser.isAdmin === 'false') return responseHandler(res, 403, { status: 403 ,Error: 'You are not allowed to perform this action'});
 			const officeExist = await query(queries.officeExist, [type, name]);
 			if(officeExist.rowCount) return responseHandler(res, 409, { status: 409, Error: 'Office already exists' });
 			const newOffice = await query(queries.insertOffice, [type, name]);
@@ -39,7 +39,24 @@ export class Office {
 			   "data": office.rows
 		   })
 		} catch (error) {
-		   return responseHandler(res, 500, { Error: error.message });
+			return responseHandler(res, 500, { status: 500, Error: error.message });
 		}
-	} 
+	}
+
+	static deleteOffice = async (req, res) => {
+		try {
+			if(req.authorizedUser.isAdmin == 'false') return responseHandler(res, 403, { status: 403 ,Error: 'You are not allowed to perform this action'});
+			const office = await query(queries.getOffice, [req.params.id]);
+			if(!office.rowCount) return responseHandler(res, 404, {Error: 'No government office found'});
+			await query(queries.deleteOffice, [req.params.id]);
+			return responseHandler(res, 200, {
+				"status": 200,
+				"data": [{
+					'message': 'government office removed successfully'
+				}]
+			});
+		} catch (error) {
+			return responseHandler(res, 500, { status: 500, Error: error.message });
+		}
+	}
 }

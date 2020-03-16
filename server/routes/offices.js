@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/', validate.office, verifyToken, Office.createOffice);
 router.get('/', verifyToken, Office.getOffices);
 router.get('/:id', validate.paramValidation, verifyToken, Office.getOffice);
+router.delete('/:id', validate.paramValidation, verifyToken, Office.deleteOffice);
 
 export default router;
