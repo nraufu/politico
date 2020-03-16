@@ -53,7 +53,7 @@ describe('Government offices', () => {
 			});
 	});
 
-	it('should return 200 ok status when an office is created', (done) => {
+	it('should return 201 created status when an office is created', (done) => {
 		chai
 			.request(app)
 			.post('/offices/')
@@ -138,6 +138,58 @@ describe('Government offices', () => {
 			});
 	});
 
+	it('should return 403 forbidden status when non-admin user try to modify a government office', (done) => {
+		chai
+			.request(app)
+			.patch(`/offices/1`)
+			.set('x-auth-token', cachedToken)
+			.send(data.modifyOffice)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 404 not found status when user try to modify a government office which doesn\'t exist', (done) => {
+		chai
+			.request(app)
+			.patch(`/offices/0`)
+			.set('x-auth-token', token)
+			.send(data.modifyOffice)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when Office is modified successfully', (done) => {
+		chai
+			.request(app)
+			.patch(`/offices/1`)
+			.set('x-auth-token', token)
+			.send(data.modifyOffice)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
+	it('should return 409 conflict status when trying to modify office with already existing info name and type', (done) => {
+		chai
+			.request(app)
+			.patch(`/offices/1`)
+			.set('x-auth-token', token)
+			.send(data.modifyOffice)
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+	
 	it('should return 400 bad request status when no token passed', (done) => {
 		chai
 			.request(app)
@@ -188,7 +240,7 @@ describe('Government offices', () => {
 
 
 describe('Database failure', () => {
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when failing to create an office due to database error', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
@@ -203,7 +255,7 @@ describe('Database failure', () => {
 			});
 	});
 
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when failing to retrieve all office due to database error', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
@@ -217,7 +269,7 @@ describe('Database failure', () => {
 			});
 	});
 
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when failing to retrieve an office due to database failure', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
@@ -231,7 +283,22 @@ describe('Database failure', () => {
 			});
 	});
 
-	it('should return 500 on database failure when trying to create a user account', (done) => {
+	it('should return 500 on database failure when failing to modify an office due to database failure', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.patch('/offices/1')
+			.send(data.modifyOffice)
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when failing to delete a political party due to database failure', (done) => {
 		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
 		chai
 			.request(app)
