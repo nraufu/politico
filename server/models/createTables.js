@@ -31,9 +31,7 @@ CREATE TABLE IF NOT EXISTS offices (
 `;
 
 const createTables = () => {
-	pool.query(tablesQuery, (err, res) => {
-		if(err) console.log(err);
-	})
+	pool.query(tablesQuery)
 }
 
 export default createTables;

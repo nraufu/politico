@@ -6,11 +6,11 @@ import { assignToken } from '../helpers/assignToken';
 import queries from '../models/queries';
 
 export class User {
-	static createUser = async (req, res) => {
+	static async createUser(req, res) {
 		try {
 			const { fullName, email, phoneNumber, national_id, passportUrl, password} = req.body;
 			const user = await query(queries.userExist, [national_id]);
-			if(user.rows.length) return responseHandler(res, 409, {"Error": "User already Exists"});
+			if(user.rows.length) return responseHandler(res, 409, {status: 409, Error: "User already Exists"});
 			const hashPassword = bcrypt.hashSync(password, 5);
 			const newUser = await query(queries.insertUser, [fullName, email, phoneNumber, national_id, passportUrl, hashPassword]);
 			const newUserInfo = newUser.rows[0];
@@ -30,18 +30,18 @@ export class User {
 				}]
 			});
 		} catch (error) {
-			return responseHandler(res, 500, { "Error": error.message });
+			return responseHandler(res, 500, { status: 500, Error: error.message });
 		}
 	}
 
-	static login = async (req, res) => {
+	static async login(req, res) {
 		try {
 			const { national_id, password} = req.body;
 			const user = await query(queries.userExist, [national_id]);
-			if(!user.rows.length) return responseHandler(res, 404, {"Error": "Account not registered"});
+			if(!user.rows.length) return responseHandler(res, 404, {status:404, Error: "Account not registered"});
 			const userInfo = user.rows[0];
 			const isPasswordValid = bcrypt.compareSync(password, userInfo.password);
-			if(!isPasswordValid) return responseHandler(res, 400, { Error: 'Incorrect Password'});
+			if(!isPasswordValid) return responseHandler(res, 400, { status:400, Error: 'Incorrect Password'});
 			const token = assignToken({ national_id : userInfo.national_id, isAdmin: userInfo.isadmin});
 			return responseHandler(res, 200, {
 				"status" : 200,
@@ -57,7 +57,7 @@ export class User {
 				}]
 			});
 		} catch (error) {
-			return responseHandler(res, 500, { "Error": error.message });
+			return responseHandler(res, 500, { status:500, Error: error.message });
 		}
 	}
 }
