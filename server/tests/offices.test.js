@@ -137,6 +137,53 @@ describe('Government offices', () => {
 				done();
 			});
 	});
+
+	it('should return 400 bad request status when no token passed', (done) => {
+		chai
+			.request(app)
+			.delete('/offices/')
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 401 unauthorized status when passed an invalid Token', (done) => {
+		chai
+			.request(app)
+			.delete('/offices/1')
+			.set('x-auth-token', data.invalidToken)
+			.end((err, res) => {
+				expect(res).to.have.status(401);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 404 not found status when passed invalid ID', (done) => {
+		chai
+			.request(app)
+			.delete('/offices/0')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when office deleted', (done) => {
+		chai
+			.request(app)
+			.delete('/offices/1')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
 });
 
 
@@ -175,6 +222,20 @@ describe('Database failure', () => {
 		chai
 			.request(app)
 			.get('/offices/1')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when trying to create a user account', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.delete('/offices/1')
 			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(500);
