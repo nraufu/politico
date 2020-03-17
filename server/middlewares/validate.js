@@ -112,14 +112,14 @@ export const validate = {
 
 	vote(req, res, next) {
 		const schema = Joi.object({
-			candidateName: Joi.string().required().messages({
-				"string.empty": `name can't be empty`,
-				"any.required": `name is required`
-			}),
 			officeId: Joi.number().required().messages({
 				"number.base": 'officeId must be a valid integer',
 				"number.unsafe": 'OfficeId is too large',
 				"any.required": 'A valid OfficeId is required'
+			}),
+			candidateName: Joi.string().required().messages({
+				"string.empty": `name can't be empty`,
+				"any.required": `name is required`
 			})
 		})
 		const { error } = schema.validate(req.body);

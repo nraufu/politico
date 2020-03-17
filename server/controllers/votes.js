@@ -9,8 +9,8 @@ export class Vote {
 			const { officeId, candidateName } = req.body;
 			const office = await query(queries.getOffice, [officeId]);
 			if(!office.rowCount) return responseHandler(res, 404, {status: 404, Error: 'No government office with this ID found'});
-			const candidate = await query(queries.candidateName, [candidateName]);
-			if(!candidate.rowCount) return responseHandler(res, 404, {status: 404, Error: 'candidate is not registered'});
+			const candidate = await query(queries.candidateName, [candidateName, officeId]);
+			if(!candidate.rowCount) return responseHandler(res, 404, {status: 404, Error: 'no candidate registered under this office found'});
 			const alreadyVoted = await query(queries.checkVotes, [office.rows[0].name, req.authorizedUser.national_id]);
 			if(alreadyVoted.rowCount) return responseHandler(res, 409, {status: 409, Error: 'You have already voted for this Office'});
 			const vote = await query(queries.vote, [office.rows[0].name, candidate.rows[0].candidate_name, req.authorizedUser.national_id]);
