@@ -4,6 +4,7 @@ import userRouter from './routes/users';
 import partyRouter from './routes/parties';
 import officeRouter from './routes/offices';
 import voteRouter from "./routes/votes";
+import petitionRouter from './routes/petition';
 import createTables from './models/createTables';
 
 createTables();
@@ -26,6 +27,7 @@ app.use('/auth/', userRouter);
 app.use('/parties/', partyRouter);
 app.use('/offices/', officeRouter);
 app.use('/votes/', voteRouter);
+app.use('/petitions/', petitionRouter);
 
 //invalid route handler
 app.use((req, res, next) => {

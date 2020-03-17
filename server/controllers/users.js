@@ -60,4 +60,21 @@ export class User {
 			return responseHandler(res, 500, { status:500, Error: error.message });
 		}
 	}
+
+	static async writePetition(req, res) {
+		try {
+			const { officeId, createdBy, text, evidence } = req.body;
+			const office = await query(queries.getOffice, [officeId]);
+			if(!office.rowCount) return responseHandler(res, 404, {status: 404, Error: 'No government office found'});
+			const petitionExist = await query(queries.petitions, [createdBy, officeId]);
+			if(petitionExist.rowCount) return responseHandler(res, 409, {status: 409, Error: 'Petition already exist'});
+			const petition = await query(queries.insertPetition, [officeId, createdBy, text, evidence]);
+			return responseHandler(res, 200, {
+				"status": 200,
+				"data": petition.rows
+			});
+		} catch (error) {
+			return responseHandler(res, 500, { status:500, Error: error.message });
+		}
+	}
 }

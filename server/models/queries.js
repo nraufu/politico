@@ -17,6 +17,8 @@ const queries = {
 	candidateExist: 'SELECT candidate_name, officeId FROM candidates WHERE candidate_name=$1 AND officeId=$2',
 	candidateName: 'SELECT * FROM candidates WHERE candidate_name=$1 and officeId=$2',
 	vote: 'INSERT INTO votes (office_name, candidate_name, voter_id) VALUES($1, $2, $3) RETURNING *',
-	checkVotes: 'SELECT office_name, voter_id FROM votes WHERE office_name=$1 AND voter_id=$2'
+	checkVotes: 'SELECT office_name, voter_id FROM votes WHERE office_name=$1 AND voter_id=$2',
+	insertPetition: 'INSERT INTO petitions (officeId, createdBy, text, evidence) VALUES($1, $2, $3, $4) RETURNING *',
+	petitions: 'SELECT * FROM petitions WHERE createdBy=$1 AND officeId=$2'
 }
 export default queries;

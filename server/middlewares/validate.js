@@ -34,7 +34,7 @@ export const validate = {
 			password: Joi.string().trim().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/).required().messages({
 				"string.empty": `Password can't be empty`,
 				"string.pattern.base": `Password must be at least 8 long with at least 1 number and one capital letter`,
-				"any.required": `A valid full name is required`
+				"any.required": `A valid full password is required`
 			})
 		});
 
@@ -101,8 +101,8 @@ export const validate = {
 	candidate(req, res, next) {
 		const schema = Joi.object({
 			candidateName: Joi.string().required().messages({
-				"string.empty": `name can't be empty`,
-				"any.required": `name is required`
+				"string.empty": `this field can't be empty`,
+				"any.required": `this field is required`
 			})
 		})
 		const { error } = schema.validate(req.body);
@@ -118,9 +118,34 @@ export const validate = {
 				"any.required": 'A valid OfficeId is required'
 			}),
 			candidateName: Joi.string().required().messages({
-				"string.empty": `name can't be empty`,
-				"any.required": `name is required`
+				"string.empty": `this field can't be empty`,
+				"any.required": `this field is required`
 			})
+		})
+		const { error } = schema.validate(req.body);
+		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
+		next();
+	},
+
+	petition(req, res, next) {
+		const schema = Joi.object({
+			officeId: Joi.number().required().messages({
+				"number.base": 'officeId must be a valid integer',
+				"number.unsafe": 'OfficeId is too large',
+				"any.required": 'A valid OfficeId is required'
+			}),
+			createdBy: Joi.string().required().messages({
+				"string.empty": `this field can't be empty`,
+				"any.required": `this field is required`
+			}),
+			text: Joi.string().required().messages({
+				"string.empty": `this field can't be empty`,
+				"any.required": `this field is required`
+			}),
+			evidence: Joi.string().required().messages({
+				"string.empty": `this field can't be empty`,
+				"any.required": `this field is required`
+			}),
 		})
 		const { error } = schema.validate(req.body);
 		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});

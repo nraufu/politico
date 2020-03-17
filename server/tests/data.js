@@ -38,6 +38,20 @@ const data = {
 	office: {
 		"type": "local government",
 		"name": "cabinet of minister"
+	},
+
+	petition: {
+		"officeId": "1",
+		"createdBy": "user name",
+		"text": "this is a text",
+		"evidence": "this is the evidence (imageurl)"
+	},
+
+	InvalidPetition: {
+		"officeId": "1",
+		"createdBy": "",
+		"text": "",
+		"evidence": ""
 	}
 }
 
