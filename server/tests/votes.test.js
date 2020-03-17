@@ -2,7 +2,6 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import app from '../app';
-import data from './data';
 import { pool } from '../models/connect';
 import { token } from './parties.test';
 

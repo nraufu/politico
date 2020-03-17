@@ -25,18 +25,6 @@ describe('Government offices', () => {
 			});
 	});
 
-	it('should return 404 not found when no political party is found', (done) => {
-		chai
-			.request(app)
-			.get('/offices/')
-			.set('x-auth-token', token)
-			.end((err, res) => {
-				expect(res).to.have.status(404);
-				expect(res.body).have.property('Error');
-				done();
-			});
-	});
-
 	it('should return 400 bad request status when passed invalid input', (done) => {
 		chai
 			.request(app)

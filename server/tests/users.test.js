@@ -9,6 +9,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 export let cachedToken;
+let token;
 
 describe('/server running', () => {
 	it('should return 200 ok status', (done) => {
@@ -94,6 +95,19 @@ describe('user create an account', () => {
 });
 
 describe('user login into an account', () => {
+	it('should return a token', (done) => {
+		chai
+			.request(app)
+			.post('/auth/login')
+			.send(data.pUser)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				token  = res.body.data[0].token;
+				done();
+			})
+
+	});
+
 	it('should return 200 ok status on user login', (done) => {
 		chai
 			.request(app)
@@ -165,6 +179,108 @@ describe('user login into an account', () => {
 				national_id: data.user.national_id,
 				password: data.user.password
 			})
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+});
+
+describe('Petitions', () => {
+	it('should return 404 when requested office is not found', (done) => {
+		chai
+			.request(app)
+			.post('/petitions/')
+			.set('x-auth-token', token)
+			.send({
+				"officeId": "0",
+				"createdBy": "name",
+				"text": "petition text",
+				"evidence": "imageurl"
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 404 not found when no political party is found', (done) => {
+		chai
+			.request(app)
+			.get('/offices/')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 201 created status when an office is created', (done) => {
+		chai
+			.request(app)
+			.post('/offices/')
+			.send({
+				"type": "new type",
+				"name": "new name"
+			})
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(201);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when a petition is recorded successfully', (done) => {
+		chai
+			.request(app)
+			.post('/petitions/')
+			.set('x-auth-token', token)
+			.send(data.petition)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
+	it('should return 409 conflict status when a petition is already recorded by the same user', (done) => {
+		chai
+			.request(app)
+			.post('/petitions/')
+			.set('x-auth-token', token)
+			.send(data.petition)
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when an input field is not valid', (done) => {
+		chai
+			.request(app)
+			.post('/petitions/')
+			.set('x-auth-token', token)
+			.send(data.InvalidPetition)
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when trying to create a petition', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.post('/petitions/')
+			.send(data.petition)
+			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(500);
 				expect(res.body).to.have.property('Error');
