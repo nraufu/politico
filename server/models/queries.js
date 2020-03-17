@@ -14,6 +14,9 @@ const queries = {
 	deleteOffice: 'DELETE FROM offices where id=$1',
 	editOffice: 'UPDATE offices SET type=$1, name=$2 WHERE id=$3 RETURNING *',
 	insertCandidate: 'INSERT INTO candidates (officeId, candidate_name) VALUES ($1, $2) RETURNING *',
-	candidateExist: 'SELECT * FROM candidates WHERE candidate_name=$1 AND officeId=$2'
+	candidateExist: 'SELECT candidate_name, officeId FROM candidates WHERE candidate_name=$1 AND officeId=$2',
+	candidateName: 'SELECT * FROM candidates WHERE candidate_name=$1',
+	vote: 'INSERT INTO votes (office_name, candidate_name, voter_id) VALUES($1, $2, $3) RETURNING *',
+	checkVotes: 'SELECT office_name, voter_id FROM votes WHERE office_name=$1 AND voter_id=$2'
 }
 export default queries;
