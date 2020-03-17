@@ -189,6 +189,71 @@ describe('Government offices', () => {
 				done();
 			});
 	});
+
+	it('should return 403 forbidden status when non-admin user try to register a candidate', (done) => {
+		chai
+			.request(app)
+			.post(`/offices/1/register`)
+			.set('x-auth-token', cachedToken)
+			.send(data.candidate)
+			.end((err, res) => {
+				expect(res).to.have.status(403);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 404 not found status when user try to register a candidate in a non existing office', (done) => {
+		chai
+			.request(app)
+			.post(`/offices/0/register`)
+			.set('x-auth-token', token)
+			.send(data.candidate)
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when candidate name is not valid', (done) => {
+		chai
+			.request(app)
+			.post(`/offices/1/register`)
+			.set('x-auth-token', token)
+			.send({})
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when new candidate is registered', (done) => {
+		chai
+			.request(app)
+			.post(`/offices/1/register`)
+			.set('x-auth-token', token)
+			.send(data.candidate)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
+	it('should return 409 conflict status when trying to register an already existing candidate', (done) => {
+		chai
+			.request(app)
+			.patch(`/offices/1`)
+			.set('x-auth-token', token)
+			.send(data.modifyOffice)
+			.end((err, res) => {
+				expect(res).to.have.status(409);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
 	
 	it('should return 400 bad request status when no token passed', (done) => {
 		chai
@@ -289,6 +354,21 @@ describe('Database failure', () => {
 			.request(app)
 			.patch('/offices/1')
 			.send(data.modifyOffice)
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when failing to create a candidate due to database failure', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.post('/offices/1/register')
+			.send(data.candidate)
 			.set('x-auth-token', token)
 			.end((err, res) => {
 				expect(res).to.have.status(500);

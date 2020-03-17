@@ -77,4 +77,26 @@ export class Office {
 			return responseHandler(res, 500, { status: 500, Error: error.message });
 		}
 	}
+
+	static async candidateOffice(req, res) {
+		try {
+			const { candidateName } = req.body;
+			if(req.authorizedUser.isAdmin == 'false') return responseHandler(res, 403, { status: 403 ,Error: 'You are not allowed to perform this action'});
+			const office = await query(queries.getOffice, [req.params.id]);
+			if(!office.rowCount) return responseHandler(res, 404, {status: 404, Error: 'No government office with this ID found'});
+			const candidateExist = await query(queries.candidateExist, [candidateName, req.params.id]);
+			if(candidateExist.rowCount) return responseHandler(res, 409, { status: 409, Error: 'Candidate already registered'});
+			const candidate = await query(queries.insertCandidate, [req.params.id, candidateName]);
+			return responseHandler(res, 200, {
+				 status: 200,
+				 data: [{
+					 "office Name": office.rows[0].name,
+					 "Running candidate Name": candidate.rows[0].candidate_name,
+					 "created_on": candidate.rows[0].created_on
+				 }]
+				});
+		} catch (error) {
+			return responseHandler(res, 500, { status: 500, Error: error.message });	
+		}
+	}
 }

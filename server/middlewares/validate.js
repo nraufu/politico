@@ -98,6 +98,18 @@ export const validate = {
 		next();
 	},
 
+	candidate(req, res, next) {
+		const schema = Joi.object({
+			candidateName: Joi.string().required().messages({
+				"string.empty": `name can't be empty`,
+				"any.required": `name is required`
+			})
+		})
+		const { error } = schema.validate(req.body);
+		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
+		next();
+	},
+
 	paramValidation(req, res, next) {
 		const schema = Joi.object({
 			id: Joi.number().required().messages({

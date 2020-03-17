@@ -13,5 +13,7 @@ const queries = {
 	getOffice: 'SELECT * FROM offices where id=$1',
 	deleteOffice: 'DELETE FROM offices where id=$1',
 	editOffice: 'UPDATE offices SET type=$1, name=$2 WHERE id=$3 RETURNING *',
+	insertCandidate: 'INSERT INTO candidates (officeId, candidate_name) VALUES ($1, $2) RETURNING *',
+	candidateExist: 'SELECT * FROM candidates WHERE candidate_name=$1 AND officeId=$2'
 }
 export default queries;
