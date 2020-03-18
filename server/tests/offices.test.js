@@ -54,6 +54,22 @@ describe('Government offices', () => {
 			});
 	});
 
+	it('should return 201 created status when another office is created', (done) => {
+		chai
+			.request(app)
+			.post('/offices/')
+			.send({
+				"type": "government",
+				"name": "office name"
+			})
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(201);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
 	it('should return 409 conflict status when an office is created', (done) => {
 		chai
 			.request(app)
@@ -230,15 +246,38 @@ describe('Government offices', () => {
 			});
 	});
 
-	it('should return 409 conflict status when trying to register an already existing candidate', (done) => {
+	it('should return 404 not found status when no office found', (done) => {
 		chai
 			.request(app)
-			.patch(`/offices/1`)
+			.get('/offices/0/result')
 			.set('x-auth-token', token)
-			.send(data.modifyOffice)
 			.end((err, res) => {
-				expect(res).to.have.status(409);
+				expect(res).to.have.status(404);
 				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when no results found', (done) => {
+		chai
+			.request(app)
+			.get('/offices/3/result')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when a certain office results are out', (done) => {
+		chai
+			.request(app)
+			.get('/offices/1/result')
+			.set('x-auth-token', token)
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
 				done();
 			});
 	});

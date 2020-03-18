@@ -20,6 +20,9 @@ const queries = {
 	checkVotes: 'SELECT office_name, voter_id FROM votes WHERE office_name=$1 AND voter_id=$2',
 	insertPetition: 'INSERT INTO petitions (officeId, createdBy, text, evidence) VALUES($1, $2, $3, $4) RETURNING *',
 	petitions: 'SELECT * FROM petitions WHERE createdBy=$1 AND officeId=$2',
-	getEmail: 'SELECT email FROM users WHERE email=$1'
+	getEmail: 'SELECT email FROM users WHERE email=$1',
+	numberOfVotes: 'SELECT count(voter_id) as total_votes FROM votes WHERE candidate_name=$1',
+	candidates: 'SELECT * FROM candidates WHERE officeId=$1',
+	office_name: 'SELECT * FROM votes WHERE office_name=$1'
 }
 export default queries;
