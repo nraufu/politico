@@ -188,6 +188,66 @@ describe('user login into an account', () => {
 	});
 });
 
+describe('User reset password', () => {
+	it('should return 404 not found status when no email is registered', (done) => {
+		chai
+			.request(app)
+			.post('/auth/reset')
+			.send({
+				"email": "noemail@email.com"
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(404);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 400 bad request status when input is invalid', (done) => {
+		chai
+			.request(app)
+			.post('/auth/reset')
+			.send({
+				"email": ""
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(400);
+				expect(res.body).to.have.property('Error');
+				done();
+			});
+	});
+
+	it('should return 200 ok status when email is sent successfully on password reset', (done) => {
+		chai
+			.request(app)
+			.post('/auth/reset')
+			.send({
+				"email": data.user.email
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.have.property('data');
+				done();
+			});
+	});
+
+	it('should return 500 on database failure when failing to reset password', (done) => {
+		const queryStub = sinon.stub(pool, 'query').throws(new Error('Query failed'));
+		chai
+			.request(app)
+			.post('/auth/reset')
+			.send({
+				"email": data.user.email
+			})
+			.end((err, res) => {
+				expect(res).to.have.status(500);
+				expect(res.body).to.have.property('Error');
+				queryStub.restore();
+				done();
+			});
+	});
+});
+
 describe('Petitions', () => {
 	it('should return 404 when requested office is not found', (done) => {
 		chai

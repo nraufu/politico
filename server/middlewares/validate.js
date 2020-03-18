@@ -152,6 +152,19 @@ export const validate = {
 		next();
 	},
 
+	reset(req, res, next) {
+		const schema = Joi.object({
+			email: Joi.string().trim().regex(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/i).required().messages({
+				"string.empty": `email can't be empty`,
+				"string.pattern.base": `A valid email is required`,
+				"any.required": `email is required`
+			}),
+		})
+		const { error } = schema.validate(req.body);
+		if (error) return responseHandler(res, 400, {"Error": error.details[0].message});
+		next();
+	},
+
 	paramValidation(req, res, next) {
 		const schema = Joi.object({
 			id: Joi.number().required().messages({
