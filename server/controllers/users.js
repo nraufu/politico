@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { query } from '../models/connect';
 import { responseHandler } from '../helpers/response';
 import { assignToken } from '../helpers/assignToken';
+import sendMail from '../helpers/sendEmail';
 import queries from '../models/queries';
 
 export class User {
@@ -56,6 +57,24 @@ export class User {
 					}
 				}]
 			});
+		} catch (error) {
+			return responseHandler(res, 500, { status:500, Error: error.message });
+		}
+	}
+
+	static async passwordReset(req, res) {
+		try {
+			const { email } = req.body;
+			const getUserEmail = await query(queries.getEmail, [email]);
+			if(!getUserEmail.rowCount) return responseHandler(res, 404, { status: 404, Error: 'No account found related to this email'});
+			await sendMail(email);
+			return responseHandler(res, 200, {
+				"status": 200,
+				"data": [{
+					"message": "check your email for password reset link",
+					"email": email
+				}]
+			})
 		} catch (error) {
 			return responseHandler(res, 500, { status:500, Error: error.message });
 		}
