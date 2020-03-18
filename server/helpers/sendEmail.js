@@ -11,7 +11,7 @@ async function sendMail(receiverEmail) {
 	  }
 	});
   
-	let info = await transporter.sendMail({
+	await transporter.sendMail({
 	  from: '"Politico ✔" <politico@example.com>',
 	  to: `${receiverEmail}`,
 	  subject: "Password reset🔓",

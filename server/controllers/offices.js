@@ -99,4 +99,25 @@ export class Office {
 			return responseHandler(res, 500, { status: 500, Error: error.message });	
 		}
 	}
+
+	static async viewResults(req, res) {
+		try {
+			const office = await query(queries.getOffice, [req.params.id]);
+			if(!office.rowCount) return responseHandler(res, 404, {status: 404, Error: 'No government office with this ID found'});
+			const results = [];
+			const officeCandidates = await query(queries.candidates, [req.params.id]);
+			if(!officeCandidates.rowCount) return responseHandler(res, 400, {status: 400, Error: "No results available for this office"});
+			for (let i = 0;  i < officeCandidates.rows.length; i++) {
+				let votes = await query(queries.numberOfVotes, [officeCandidates.rows[i].candidate_name]);
+				results.push({
+					"office": office.rows[0].name,
+					"candidate": officeCandidates.rows[i].candidate_name,
+					"number of votes": votes.rows[0].total_votes
+				});
+			}
+			return responseHandler(res, 200, {status: 200, data: results});
+		} catch (error) {
+			return responseHandler(res, 500, { status: 500, Error: error.message });
+		}
+	}
 }
