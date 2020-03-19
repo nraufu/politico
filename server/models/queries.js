@@ -7,7 +7,7 @@ const queries = {
 	getParty: 'SELECT * FROM parties where id=$1',
 	deleteParty: 'DELETE FROM parties where id=$1',
 	editParty: 'UPDATE parties SET logoUrl=$1, name=$2, hqAddress=$3 WHERE id=$4 RETURNING *',
-	officeExist: 'SELECT * FROM offices where type=$1 or name=$2',
+	officeExist: 'SELECT * FROM offices where type=$1 AND name=$2',
 	insertOffice: 'INSERT INTO offices (type, name) VALUES ($1, $2) returning *',
 	getOffices: 'SELECT * FROM offices',
 	getOffice: 'SELECT * FROM offices where id=$1',
