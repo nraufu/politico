@@ -1,0 +1,169 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0",
+		"title": "Politico",
+		"description": "Politico enables citizens give their mandate to politicians running for different government offices while building trust in the process through transparency.",
+		"contact": {
+			"email": "nraufu@gmail.com"
+		},
+		"license": {
+			"name": "MIT",
+			"url": "https://github.com/nraufu/politico/blob/develop/README.md"
+		}
+	},
+	"host": "politico-01.herokuapp.com",
+	"basePath": "/",
+	"schemes": ["http", "https"],
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"paths": {
+		"/auth/signup": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "User signup API",
+				"description": "User create an account",
+				"operationId": "signup",
+				"parameters": [{
+					"in": "body",
+					"name": "body",
+					"description": "User object that needed to make signup",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/signup"
+					}
+				}],
+				"responses": {
+					"201": {
+						"description": "User successfully created"
+					},
+					"400": {
+						"description": "Bad request,Invalid input"
+					},
+					"409": {
+						"description": " User with used national Id exists"
+					},
+					"500": {
+						"description": " Database Failure"
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "User Login API",
+				"description": "Login into account",
+				"operationId": "login",
+				"parameters": [{
+					"in": "body",
+					"name": "body",
+					"description": "User object that needs to make login",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/login"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "User successfully login"
+					},
+					"400": {
+						"description": "Bad request, Invalid input, Incorrect password"
+					},
+					"404": {
+						"description": "Account not registered"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+		"/auth/reset": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "User reset Password API",
+				"description": "reset password",
+				"operationId": "reset",
+				"parameters": [{
+					"in": "body",
+					"name": "body",
+					"description": "User object that needs to reset password",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/resetPassword"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "password reset link sent successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Account related to provided to this email not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		}
+	},
+
+	"definitions": {
+		"signup": {
+			"type": "object",
+			"properties": {
+				"fullName": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string",
+					"required": true
+				},
+				"phoneNumber": {
+					"type": "string",
+					"required": true
+				},
+				"national_id": {
+					"type": "string",
+					"required": true
+				},
+				"passportUrl": {
+					"type": "string",
+					"required": true
+				},
+				"password": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"login": {
+			"type": "object",
+			"properties": {
+				"national_id": {
+					"type": "string",
+					"required": true
+				},
+				"password": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"resetPassword": {
+			"type": "object",
+			"properties": {
+				"email": {
+					"type": "string",
+					"required": true
+				}
+			}
+		}
+	}
+}
