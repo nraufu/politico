@@ -28,13 +28,24 @@ window.addEventListener('resize', toggleSideBar);
 const modal_create = document.querySelector(".js-modal");
 const modal_info = document.querySelector(".js-party-modal");
 const onSuccess = document.querySelector('.modal-politician');
+const deleteModal =document.querySelector('.modal-delete');
 const createPartyBtn = document.querySelector(".js-create-party");
 const modalCancelBtn = document.querySelector(".js-cancel-modal");
 const viewBtn = document.querySelectorAll('.js-view-party');
 const placeBtn = document.querySelector('.js-place-button');
+const deleteBtn = document.querySelector('.js-delete');
+const cancelDeleteBtn = document.querySelector('.js-cancel-delete');
 
 const showCreateModal = (e) => {
 	modal_create.style.display = 'block';
+};
+
+const showDeleteModal = (e) => {
+	deleteModal.style.display = 'block';
+};
+
+const hideDeleteModal = (e) => {
+	deleteModal.style.display = 'none';
 };
 
 const hideModal = (e) => {
@@ -51,8 +62,10 @@ const showSuccess = (e) => {
 }
 
 if(placeBtn) placeBtn.addEventListener('click', showSuccess);
+if(deleteBtn) deleteBtn.addEventListener('click', showDeleteModal);
 if(createPartyBtn) createPartyBtn.addEventListener('click', showCreateModal);
 if(modalCancelBtn) modalCancelBtn.addEventListener('click', hideModal);
+if(cancelDeleteBtn) cancelDeleteBtn.addEventListener('click', hideDeleteModal);
 if(viewBtn) {
 	for (let i = 0; i < viewBtn.length; i++) {
 		viewBtn[i].addEventListener('click', showPartyModal);

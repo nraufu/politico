@@ -385,6 +385,32 @@ figure img {
     box-shadow: 2px -1px 3px 2px rgba(255, 255, 255, 0.5);
 }
 
+.modal-body-politician {
+    position: relative;
+    width: 30%;
+    text-align: center;
+    margin: 200px auto;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #000;
+    height: 90px;
+    padding: 25px 5px;
+    box-shadow: 2px -1px 3px 2px rgba(255, 255, 255, 0.5);
+}
+
+.modal-body-office, .modal-body-delete {
+    position: relative;
+    width: 31%;
+    text-align: center;
+    margin: 200px auto;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #000;
+    height: 140px;
+    padding: 25px 5px;
+    box-shadow: 2px -1px 3px 2px rgba(255, 255, 255, 0.5);
+}
+
 .modal img {
     position: absolute;
     border-radius: 5px;
