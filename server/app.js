@@ -1,5 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
 import userRouter from './routes/users';
 import partyRouter from './routes/parties';
 import officeRouter from './routes/offices';
@@ -21,6 +23,8 @@ app.get('/', (req, res) => {
         Message: 'Welcome To Politico 👋'
     });
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //api routes
 app.use('/auth/', userRouter);

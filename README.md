@@ -29,7 +29,10 @@
 To view the UI Template [click here](https://nraufu.github.io/politico/UI/)
 
 # API Host
-API endpoints are hosted on [Heroku](https://politico-01.herokuapp.com/)
+API endpoints are hosted [Here](https://politico-01.herokuapp.com/)
+
+# API Documentation
+API endpoints Documentation are hosted [Here](https://politico-01.herokuapp.com/api-docs)
 
 ## Technologies && Tools
 
@@ -86,4 +89,4 @@ Run Test case
 
 ### Author
 
-[NIYONZI Raufu](https://github.com/nraufu/)
+[NIYONZI Raufu](https://github.com/nraufu/) ✌👋

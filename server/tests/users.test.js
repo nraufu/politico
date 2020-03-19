@@ -22,6 +22,17 @@ describe('/server running', () => {
 				done();
 			});
 	});
+
+	it('should return 200 ok status on api documentation request', (done) => {
+		chai
+			.request(app)
+			.get('/api-docs')
+			.end((err, res) => {
+				expect(res).to.have.status(200);
+				expect(res.body).to.be.an('object');
+				done();
+			});
+	});
 });
 
 describe('/invalid routes', () => {
