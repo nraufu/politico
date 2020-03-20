@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import userRouter from './routes/users';
@@ -14,6 +15,7 @@ createTables();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 if( process.env.NODE_ENV == 'development') app.use(morgan('dev'));

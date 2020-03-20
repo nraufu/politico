@@ -24,6 +24,7 @@
 - A user can vote for one politician per a specific government office.
 - A user can view vote results for a specific government office.
 - A user can create a petition challenging the outcome of a concluded election.
+- A user can view his profile information.
 
 # UI Template
 To view the UI Template [click here](https://nraufu.github.io/politico/UI/)
@@ -86,6 +87,11 @@ Run Test case
 |POST /votes/                     | vote for a specific politician in a specific office     |
 |GET /offices/:officeId/result    | view election results for a specific office             |
 |POST /petitions/                 | create a petition                                       |
+|GET /auth/reset                  | view profile information                                |
+
+
+## License
+- MIT
 
 ### Author
 
