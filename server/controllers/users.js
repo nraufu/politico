@@ -96,4 +96,28 @@ export class User {
 			return responseHandler(res, 500, { status:500, Error: error.message });
 		}
 	}
+
+	static async profileInfo(req, res){
+		try {
+			const user = await query(queries.userExist, [req.authorizedUser.national_id]);
+			if(!user.rowCount) return responseHandler(res, 404, {status:404, Error: "No account found"});
+			const votedFor = await query(queries.votedFor, [req.authorizedUser.national_id]);
+			return responseHandler(res, 200, {
+				"status": 200,
+				"data": [{
+					userInfo: {
+						"Full name": user.rows[0].fullname,
+						"email": user.rows[0].email,
+						"phone Number": user.rows[0].phonenumber,
+						"national_id": user.rows[0].national_id,
+						"passport Url": user.rows[0].passporturl
+					}},{
+					votedFor: votedFor.rows
+					}
+				]
+			})
+		} catch (error) {
+			return responseHandler(res, 500, { status:500, Error: error.message });
+		}
+	}
 }
