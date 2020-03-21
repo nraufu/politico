@@ -51,8 +51,8 @@
 		},
 		"/auth/login": {
 			"post": {
-				"tags": ["Users"],
-				"summary": "User Login API",
+				"tags": ["Users", "Admin"],
+				"summary": "User or Admin Login API",
 				"description": "Login into account",
 				"operationId": "login",
 				"parameters": [{
@@ -110,6 +110,79 @@
 					}
 				}
 			}
+		},
+
+		"/parties/": {
+			"post": {
+				"tags": ["Admin"],
+				"summary": "Admin create a political party API",
+				"description": "create political party",
+				"operationId": "create",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Admin object that needed to create a political party",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/createParty"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "political party created successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"403": {
+						"description": "Forbidden Action"
+					},
+					"409": {
+						"description": "Already created"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Political Party"],
+				"summary": "get political parties information API",
+				"description": "retrieve all political parties",
+				"operationId": "getAllParties",
+				"parameters": [{
+					"name": "x-auth-token",
+					"in": "header",
+					"type": "string",
+					"description": "User Token"
+				}],
+				"responses": {
+					"200": {
+						"description": "political party created successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"403": {
+						"description": "Forbidden Action"
+					},
+					"409": {
+						"description": "Already created"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
 		}
 	},
 
@@ -160,6 +233,23 @@
 			"type": "object",
 			"properties": {
 				"email": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"createParty": {
+			"type": "object",
+			"properties": {
+				"logoUrl": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"hqAddress": {
 					"type": "string",
 					"required": true
 				}
