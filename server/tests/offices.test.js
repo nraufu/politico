@@ -264,7 +264,7 @@ describe('Government offices', () => {
 			.get('/offices/3/result')
 			.set('x-auth-token', token)
 			.end((err, res) => {
-				expect(res).to.have.status(400);
+				expect(res).to.have.status(404);
 				expect(res.body).to.have.property('Error');
 				done();
 			});

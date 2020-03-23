@@ -87,7 +87,7 @@ Run Test case
 |POST /votes/                     | vote for a specific politician in a specific office     |
 |GET /offices/:officeId/result    | view election results for a specific office             |
 |POST /petitions/                 | create a petition                                       |
-|GET /auth/reset                  | view profile information                                |
+|GET /auth/profile                | view profile information                                |
 
 
 ## License
