@@ -106,7 +106,7 @@ export class Office {
 			if(!office.rowCount) return responseHandler(res, 404, {status: 404, Error: 'No government office with this ID found'});
 			const results = [];
 			const officeCandidates = await query(queries.candidates, [req.params.id]);
-			if(!officeCandidates.rowCount) return responseHandler(res, 400, {status: 400, Error: "No results available for this office"});
+			if(!officeCandidates.rowCount) return responseHandler(res, 404, {status: 404, Error: "No results available for this office"});
 			for (let i = 0;  i < officeCandidates.rows.length; i++) {
 				let votes = await query(queries.numberOfVotes, [officeCandidates.rows[i].candidate_name]);
 				results.push({
