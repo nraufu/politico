@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Niyonzi Rauf">
+	<link rel="icon" type="image/png" href="../img/vote-hand.png" sizes="32x32">
+	<title>Admin - Panel</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+	<div class="modal js-modal">
+		<div class="modal-body">
+			<input class="modal-input" type="text" placeholder="Office Name" required /><br>
+			<select class="modal-input">
+				<option value="choose">--choose Type--</option>
+				<option value="choose">Federal</option>
+				<option value="choose">Legislative</option>
+				<option value="choose">Local Government</option>
+			</select><br>
+			<a type="button" href="./offices.html" class="button button--success js-confirm-modal">Add</a>
+			<a type="button" class="button modal-cancel-btn js-cancel-modal">Cancel</a>
+		</div>
+	</div>
+	<div class="modal modal-info js-party-modal">
+		<div class="modal-body-office">
+			<a href="./offices.html"><img src="../img/close-icon.svg" alt="close"></a>
+			<p>Office Name: <span contenteditable="true" class="js-content">Investigation Bureau</span></p>
+			<p>Office Type: <span contenteditable="true" class="js-content">Federal</span></p>
+			<a type="button" class="button button--success toolbar-edit-btn js-edit-story">Edit</a>
+			<a type="button" class="button button--delete js-delete">Delete</a>
+		</div>
+	</div>
+	<div class="modal modal-delete">
+		<div class="modal-body-delete">
+			<p>Are you sure You want to delete this Office ?</p>
+			<a type="button" href="./offices.html" class="button button--success js-confirm-modal">Yes</a>
+			<a type="button" class="button modal-cancel-btn js-cancel-delete">No</a>
+		</div>
+	</div>
+	<header class="container">
+		<div class="logo">
+			<a href="#">
+				<h1 id="p-logo">
+					<img src="../img/vote-hand.png" alt="logo" width="25px" height="25px">
+					Politico
+				</h1>
+			</a>
+		</div>
+		<nav class="nav">
+			<a href="#" class="nav-open-menu js-open-menu"></a>
+			<ul class="list nav-list js-nav-list">
+				<li class="list-item">
+					<a href="#" class="nav-close-menu js-close-menu"></a>
+				</li>
+				<li class="list-item">
+					<a href="./panel.html" class="link nav-link">
+						Parties
+					</a>
+				</li>
+				<li class="list-item active">
+					<a href="./offices.html" class="link nav-link">
+						Offices
+					</a>
+				</li>
+				<li class="list-item">
+					<a href="./politician.html" class="link nav-link">
+						Politician
+					</a>
+				</li>
+				<li class="list-item">
+					<a href="./a_petition.html" class="link nav-link">
+						Petition
+					</a>
+				</li>
+				<li class="list-item">
+					<a href="./admin.html" class="link nav-link">
+						SignOut
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<div class="add-party">
+		<div class="toolbar-buttons">
+			<a type="button" class="button button--success toolbar-edit-btn js-create-party">➕ Create Office</a>
+		</div>
+	</div>
+	<main class="container">
+		<table id="parties">
+			<tr>
+				<th>Office Name</th>
+				<th>Office Type</th>
+				<th>Action</th>
+			</tr>
+			<tr>
+				<td>Investigation Bureau</td>
+				<td>Federal</td>
+				<td>
+					<div class="toolbar-buttons">
+						<a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Ministry of Agriculture</td>
+				<td>Local government</td>
+				<td>
+					<div class="toolbar-buttons">
+						<a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>prosecutor chamber</td>
+				<td>legislative</td>
+				<td>
+					<div class="toolbar-buttons">
+						<a type="button" class="button button--success toolbar-edit-btn js-view-party">view</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</main>
+	<script src="../js/script.js"></script>
+</body>
+
+</html>

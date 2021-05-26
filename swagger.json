@@ -1,0 +1,847 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0",
+		"title": "Politico",
+		"description": "Politico enables citizens give their mandate to politicians running for different government offices while building trust in the process through transparency.",
+		"contact": {
+			"email": "nraufu@gmail.com"
+		},
+		"license": {
+			"name": "MIT",
+			"url": "https://github.com/nraufu/politico/blob/develop/README.md"
+		}
+	},
+	"host": "politico-01.herokuapp.com",
+	"basePath": "/",
+	"schemes": ["http", "https"],
+	"consumes": ["application/json"],
+	"produces": ["application/json"],
+	"paths": {
+		"/auth/signup": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "User signup API",
+				"description": "User create an account",
+				"operationId": "signup",
+				"parameters": [{
+					"in": "body",
+					"name": "body",
+					"description": "User object that needed to make signup",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/signup"
+					}
+				}],
+				"responses": {
+					"201": {
+						"description": "User successfully created"
+					},
+					"400": {
+						"description": "Bad request,Invalid input"
+					},
+					"409": {
+						"description": " User with used national Id exists"
+					},
+					"500": {
+						"description": " Database Failure"
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"tags": ["Users", "Admin"],
+				"summary": "User or Admin Login API",
+				"description": "Login into account",
+				"operationId": "login",
+				"parameters": [{
+					"in": "body",
+					"name": "body",
+					"description": "User object that needs to make login",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/login"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "User successfully login"
+					},
+					"400": {
+						"description": "Bad request, Invalid input, Incorrect password"
+					},
+					"404": {
+						"description": "Account not registered"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+		"/auth/reset": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "User reset Password API",
+				"description": "reset password",
+				"operationId": "reset",
+				"parameters": [{
+					"in": "body",
+					"name": "body",
+					"description": "User object that needs to reset password",
+					"required": true,
+					"schema": {
+						"$ref": "#/definitions/resetPassword"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "password reset link sent successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Account related to provided to this email not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/parties/": {
+			"post": {
+				"tags": ["Admin"],
+				"summary": "Admin create a political party API",
+				"description": "create political party",
+				"operationId": "create",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Admin object that needed to create a political party",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/createParty"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "political party created successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"403": {
+						"description": "Forbidden Action"
+					},
+					"409": {
+						"description": "Already created"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Political Party"],
+				"summary": "get political parties information API",
+				"description": "retrieve all political parties",
+				"operationId": "getAllParties",
+				"parameters": [{
+					"name": "x-auth-token",
+					"in": "header",
+					"type": "string",
+					"description": "User Token"
+				}],
+				"responses": {
+					"200": {
+						"description": "political party created successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"403": {
+						"description": "Forbidden Action"
+					},
+					"409": {
+						"description": "Already created"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/parties/{partyId}": {
+			"get": {
+				"tags": ["Political Party"],
+				"summary": "Users can view a specific political party",
+				"description": "view a specific political party",
+				"operationId": "view",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "User Token"
+					},
+					{
+						"in": "path",
+						"name": "partyId",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Political party found"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Political party not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+
+			"patch": {
+				"tags": ["Admin"],
+				"summary": "Admin can update a political party",
+				"description": "modify a specific political party",
+				"operationId": "modify",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "path",
+						"name": "partyId",
+						"required": true
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Admin object that needed to modify a political party",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/modifyParty"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Political party modified successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Political party not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+
+			"delete": {
+				"tags": ["Admin"],
+				"summary": "Admin can delete a political party",
+				"description": "delete a specific political party",
+				"operationId": "delete",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "path",
+						"name": "partyId",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Political party deleted successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Political party not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/offices/": {
+			"post": {
+				"tags": ["Admin"],
+				"summary": "Admin create a government office API",
+				"description": "create government office",
+				"operationId": "create",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Admin object that needed to create a government office",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/createOffice"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "government office created successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"403": {
+						"description": "Forbidden Action"
+					},
+					"409": {
+						"description": "Already created"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Government Office"],
+				"summary": "get all government office information API",
+				"description": "retrieve all government information",
+				"operationId": "getAllOffice",
+				"parameters": [{
+					"name": "x-auth-token",
+					"in": "header",
+					"type": "string",
+					"description": "Users Token"
+				}],
+				"responses": {
+					"200": {
+						"description": "government offices found"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "no government offices found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/offices/{officeId}": {
+			"get": {
+				"tags": ["Government Office"],
+				"summary": "Users can view a specific Government Office",
+				"description": "view a specific Government Office",
+				"operationId": "view",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "User Token"
+					},
+					{
+						"in": "path",
+						"name": "officeId",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "government office found"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Political party not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Admin"],
+				"summary": "Admin can update a government office",
+				"description": "modify a specific government office",
+				"operationId": "modify",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "path",
+						"name": "partyId",
+						"required": true
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Admin object that needed to modify a government office",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/modifyOffice"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Government Office modified successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Government Office not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Admin"],
+				"summary": "Admin can delete a government office",
+				"description": "delete a specific government office",
+				"operationId": "delete",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "path",
+						"name": "partyId",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "government office deleted successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "government office not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/offices/{officeId}/register": {
+			"post": {
+				"tags": ["Admin"],
+				"summary": "Admin register a candidate",
+				"description": "register candidate",
+				"operationId": "register",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Admin Token"
+					},
+					{
+						"in": "path",
+						"name": "officeId",
+						"required": true
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Admin object that needed to register a candidate",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/registerCandidate"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "candidate registered  created successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"403": {
+						"description": "Forbidden Action"
+					},
+					"409": {
+						"description": "Already created"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/votes/": {
+			"post": {
+				"tags": ["Admin", "Users"],
+				"summary": "admin && users vote",
+				"description": "vote for a candidate",
+				"operationId": "vote",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "user Token"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "user object that needed to vote",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/vote"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "voted successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "No candidate or office to vote for in this section"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/petitions/": {
+			"post": {
+				"tags": ["Admin", "Users"],
+				"summary": "admin && users place petition",
+				"description": "petition against a concluded office vote",
+				"operationId": "vote",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "users Token"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "user object that needed for placing a petition",
+						"type": "object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/petition"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "petition placed successfully"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "no office found"
+					},
+					"409": {
+						"description": "petition already placed"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		},
+
+		"/offices/{officeId}/result": {
+			"get": {
+				"tags": ["Government Office"],
+				"summary": "Users can view a vote results",
+				"description": "view a specific Government Office vote results",
+				"operationId": "view results",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Users Token"
+					},
+					{
+						"in": "path",
+						"name": "officeId",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "results found"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "government office not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}	
+		},
+
+		"/auth/profile/": {
+			"get": {
+				"tags": ["Admin", "Users"],
+				"summary": "Users can view their profile",
+				"description": "view profile info API",
+				"operationId": "view profile",
+				"parameters": [{
+						"name": "x-auth-token",
+						"in": "header",
+						"required": true,
+						"type": "string",
+						"description": "Users Token"
+					},
+					{
+						"in": "path",
+						"name": "officeId",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "profile info found"
+					},
+					"400": {
+						"description": "Bad request, Invalid input"
+					},
+					"404": {
+						"description": "Account not found"
+					},
+					"500": {
+						"description": "Database failure"
+					}
+				}
+			}
+		}
+	},
+
+	"definitions": {
+		"signup": {
+			"type": "object",
+			"properties": {
+				"fullName": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string",
+					"required": true
+				},
+				"phoneNumber": {
+					"type": "string",
+					"required": true
+				},
+				"national_id": {
+					"type": "string",
+					"required": true
+				},
+				"passportUrl": {
+					"type": "string",
+					"required": true
+				},
+				"password": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"login": {
+			"type": "object",
+			"properties": {
+				"national_id": {
+					"type": "string",
+					"required": true
+				},
+				"password": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"resetPassword": {
+			"type": "object",
+			"properties": {
+				"email": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"createParty": {
+			"type": "object",
+			"properties": {
+				"logoUrl": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"hqAddress": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"modifyParty": {
+			"type": "object",
+			"properties": {
+				"logoUrl": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				},
+				"hqAddress": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"createOffice": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"modifyOffice": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"required": true
+				},
+				"name": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"registerCandidate": {
+			"type": "object",
+			"properties": {
+				"candidateName": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"vote": {
+			"type": "object",
+			"properties": {
+				"officeId": {
+					"type": "string",
+					"required": true
+				},
+				"candidateName": {
+					"type": "string",
+					"required": true
+				}
+			}
+		},
+		"petition": {
+			"type": "object",
+			"properties": {
+				"officeId": {
+					"type": "string",
+					"required": true
+				},
+				"createdBy": {
+					"type": "string",
+					"required": true
+				},
+				"text": {
+					"type": "string",
+					"required": true
+				},
+				"evidence": {
+					"type": "string",
+					"required": true
+				}
+			}
+		}
+	}
+}
