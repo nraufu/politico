@@ -95,4 +95,4 @@ Run Test case
 
 ### Author
 
-[NIYONZI Raufu](https://github.com/nraufu/) ✌👋
+[Niyonzi Raufu](https://github.com/nraufu/) ✌👋
